@@ -1,4 +1,49 @@
+class Tester {
+	constructor(questionsList) {
+		this.questionsList = questionsList
+		this.currentQuestion = null
+		this.history = []
+		this.counterCorrectAnswers = 0
+	}
 
+	getTableRow(dataArray, ellTag = 'td') {
+		const tr = document.createElement('tr')
+		for (const el of dataArray) {
+			const td = document.createElement(ellTag)
+			td.innerText = el
+			tr.append(td)
+		}
+		return tr
+	}
+
+	render(containerId) {
+		const testerContainer = document.createElement('div')
+		this.counterCorrectAnswersForm = document.createElement('div')
+		this.historyContainer = document.createElement('div')
+		this.questionFormContainer = document.createElement('div')
+
+		testerContainer.append(this.questionFormContainer)
+		testerContainer.append(this.historyContainer)
+		testerContainer.append(this.counterCorrectAnswersForm)
+		const targetContainer = document.getElementById(containerId)
+		targetContainer.append(testerContainer)
+		this.next()
+	}
+	next() {
+		this.currentQuestion = this.getRandomQuestion()
+		this.questionFormContainer.innerHTML = ''
+		this.questionFormContainer.append(this.renderQuestionForm())
+		this.counterCorrectAnswersForm.innerHTML = ''
+		this.counterCorrectAnswersForm.append('Correct answer: ', this.counterCorrectAnswers)
+
+		this.historyContainer.innerHTML = ''
+		this.historyContainer.append(this.renderTableForm())
+	}
+}
+window.onload = function () {
+	const t1 = new Tester(testSet)
+	t1.render('container')
+}
 const testSet = [
 	{
 		question: 'What is the capital of France?',
