@@ -5,7 +5,12 @@ class Tester {
 		this.history = []
 		this.counterCorrectAnswers = 0
 	}
-
+	getRandomQuestion() {
+		const randomIndex = Math.floor(Math.random() * this.questionsList.length)
+		const randomObj = this.questionsList[randomIndex]
+		this.questionsList.splice(randomIndex, 1)
+		return randomObj
+	}
 	getTableRow(dataArray, ellTag = 'td') {
 		const tr = document.createElement('tr')
 		for (const el of dataArray) {
