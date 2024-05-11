@@ -15,7 +15,30 @@ class Tester {
 		}
 		return tr
 	}
+	getRandomQuestion() {
+		const randomIndex = Math.floor(Math.random() * this.questionsList.length)
+		const randomObj = this.questionsList[randomIndex]
+		this.questionsList.splice(randomIndex, 1)
+		return randomObj
+	}
+	renderQuestionForm() {
+		const questionContainer = document.createElement('div')
+		questionContainer.className = 'question-container'
 
+		const questionFormContainer = document.createElement('h3')
+		questionFormContainer.innerText = this.currentQuestion.question
+		questionContainer.append(questionFormContainer)
+
+		const optionsContainer = document.createElement('ol')
+		for (const opt of this.currentQuestion.options) {
+			const li = document.createElement('li')
+			li.innerText = opt.text
+			li.onclick = this.optionClick.bind(this, opt.id)
+			optionsContainer.append(li)
+		}
+		questionContainer.append(optionsContainer)
+		return questionContainer
+	}
 	render(containerId) {
 		const testerContainer = document.createElement('div')
 		this.counterCorrectAnswersForm = document.createElement('div')
